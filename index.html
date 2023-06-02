@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Form Rekrutasi</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    form {
+      max-width: 400px;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+
+    input[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h2>Form Rekrutasi</h2>
+
+  <form id="rekrutasiForm">
+    <label for="nama">Nama:</label>
+    <input type="text" id="nama" name="nama">
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email">
+
+    <label for="phone">Nomor Telepon:</label>
+    <input type="tel" id="phone" name="phone">
+
+    <label for="vacancy">Lowongan Pekerjaan:</label>
+    <select id="vacancy" name="vacancy">
+      <option value="">Pilih Lowongan</option>
+    </select>
+
+    <label for="posisi">Posisi yang Dilamar:</label>
+    <select id="posisi" name="posisi">
+      <option value="">Pilih Posisi</option>
+    </select>
+
+    <input type="submit" value="Kirim">
+  </form>
+
+  <table id="dataTable">
+    <thead>
+      <tr>
+        <th>Nama</th>
+        <th>Email</th>
+        <th>Nomor Telepon</th>
+        <th>Lowongan Pekerjaan</th>
+        <th>Posisi yang Dilamar</th>
+      </tr>
+    </thead>
+    <tbody id="dataBody"></tbody>
+  </table>
+
+  <script>
+    // Mendefinisikan opsi untuk lowongan pekerjaan
+    const vacancyOptions = [
+      { value: "lowongan1", label: "IT Suppport" },
+      { value: "lowongan2", label: "Desain Grafis" },
+      { value: "lowongan3", label: "UI-UX Devoloper" }
+    ];
+
+    // Mendefinisikan opsi untuk posisi yang dilamar
+    const posisiOptions = [
+      { value: "posisi1", label: "Database Devoloper" },
+      { value: "posisi2", label: "Vektor Desain" },
+      { value: "posisi3", label: "UI Devoloper" }
+    ];
+
+    // Mengisi pilihan option untuk lowongan pekerjaan
+    const vacancySelect = document.getElementById("vacancy");
+    vacancyOptions.forEach(option => {
+      const optionElement = document.createElement("option");
+      optionElement.value = option.value;
+      optionElement.text = option.label;
+      vacancySelect.appendChild(optionElement);
+    });
+
+    // Mengisi pilihan option untuk posisi yang dilamar
+    const posisiSelect = document.getElementById("posisi");
+    posisiOptions.forEach(option => {
+      const optionElement = document.createElement("option");
+      optionElement.value = option.value;
+      optionElement.text = option.label;
+      posisiSelect.appendChild(optionElement);
+    });
+
+    // Menangani event saat form dikirim
+    const form = document.getElementById("rekrutasiForm");
+    const dataBody = document.getElementById("dataBody");
+    form.addEventListener("submit", function(event) {
+      event.preventDefault(); // Mencegah form dikirim secara langsung
+
+      // Mengambil nilai input
+      const nama = document.getElementById("nama").value;
+      const email = document.getElementById("email").value;
+      const phone = document.getElementById("phone").value;
+      const vacancy = document.getElementById("vacancy").value;
+      const posisi = document.getElementById("posisi").value;
+
+      // Memvalidasi input
+      if (nama === "" || email === "" || phone === "" || vacancy === "" || posisi === "") {
+        alert("Harap isi semua kolom!");
+        return;
+      }
+
+      // Membuat elemen <tr> dan <td> untuk setiap kolom data
+      const newRow = document.createElement("tr");
+      const namaCell = document.createElement("td");
+      const emailCell = document.createElement("td");
+      const phoneCell = document.createElement("td");
+      const vacancyCell = document.createElement("td");
+      const posisiCell = document.createElement("td");
+
+      // Mengisi teks pada setiap elemen <td> dengan nilai yang diisi pengguna
+      namaCell.textContent = nama;
+      emailCell.textContent = email;
+      phoneCell.textContent = phone;
+      vacancyCell.textContent = vacancy;
+      posisiCell.textContent = posisi;
+
+      // Menambahkan elemen <td> ke dalam elemen <tr>
+      newRow.appendChild(namaCell);
+      newRow.appendChild(emailCell);
+      newRow.appendChild(phoneCell);
+      newRow.appendChild(vacancyCell);
+      newRow.appendChild(posisiCell);
+
+      // Menambahkan elemen <tr> ke dalam elemen <tbody>
+      dataBody.appendChild(newRow);
+
+      // Mereset form setelah berhasil ditambahkan ke dalam tabel
+      form.reset();
+    });
+  </script>
+</body>
+</html>
